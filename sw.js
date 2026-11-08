@@ -1,5 +1,5 @@
 // Offline-Cache für „Passt!“ – Version erhöhen, wenn sich Dateien ändern
-const CACHE = 'passt-v1';
+const CACHE = 'passt-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
