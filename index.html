@@ -91,6 +91,24 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .fb details li{margin-bottom:6px}
 .fb details li i{color:var(--muted)}
 .wrongitem .why{margin-top:4px}
+.diag{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.diag svg{width:100%;height:auto;display:block}
+.diag .cap{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.4}
+.diag svg text{fill:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px}
+.diag svg text.h{font-weight:600}
+.diag svg text.s{font-size:13px}
+.diag svg text.m{fill:var(--muted);font-size:12.5px}
+.diag svg .b{fill:var(--card);stroke:var(--ink);stroke-width:1.4}
+.diag svg .a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.6}
+.diag svg .g{fill:var(--ok-soft);stroke:var(--ok);stroke-width:1.6}
+.diag svg .r{fill:var(--bad-soft);stroke:var(--bad);stroke-width:1.6}
+.diag svg .n{fill:var(--line);stroke:var(--muted);stroke-width:1.2}
+.diag svg .d{fill:var(--bg);stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 3}
+.diag svg .l{stroke:var(--muted);stroke-width:1.4;fill:none}
+.diag svg .la{stroke:var(--ink);stroke-width:1.6;fill:none;marker-end:url(#ah)}
+.diag svg .lacc{stroke:var(--accent);stroke-width:2;fill:none;marker-end:url(#ah)}
+.diag svg .mk{fill:var(--ink)}
+
 .foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;flex-wrap:wrap}
 .hint{font-size:12px;color:var(--muted)}
 .pop{position:fixed;left:50%;top:22%;transform:translateX(-50%);font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:26px;color:var(--ok);pointer-events:none;animation:pop .8s ease-out forwards}
@@ -243,6 +261,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 </div>
 <script src="questions.js"></script>
 <script src="why.js"></script>
+<script src="diagrams.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const store = {
@@ -250,6 +269,8 @@ const store = {
   set(k, v){ try{ localStorage.setItem("osds_"+k, JSON.stringify(v)); }catch(e){} }
 };
 QUESTIONS.forEach((q,i)=>{ q.id = q.t + "_" + i; q.w = (typeof WHY!=="undefined" && WHY[i] && WHY[i][0]===q.t) ? [null].concat(WHY[i].slice(1)) : []; });
+if(typeof DIAGRAM_MAP!=="undefined") QUESTIONS.forEach(q=>{ const m = DIAGRAM_MAP.find(([s])=>q.q.includes(s)); if(m) q.d = m[1]; });
+function diagEl(key){ const D = DIAGRAMS[key]; if(!D) return null; const w = document.createElement("div"); w.className="diag"; w.innerHTML = D.svg; const c=document.createElement("div"); c.className="cap"; c.textContent=D.cap; w.appendChild(c); return w; }
 const el = (tag, cls, txt)=>{ const n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n; };
 let stats = store.get("stats", {});   // id -> {r, w, last}
 let best = store.get("best", 0);
@@ -397,6 +418,7 @@ function answer(oi){
     y.append(el("div","h","Richtig wäre:"), el("div","ans","„"+q.o[q.a]+"“"), el("div",null,q.e));
     ex.appendChild(y);
   }
+  if(q.d){ const dg = diagEl(q.d); if(dg) ex.appendChild(dg); }
   $("#explain").innerHTML = ""; $("#explain").appendChild(ex);
   $("#score").textContent = G.score+" P";
   const st = $("#streak"); st.classList.toggle("hidden", G.streak<3); st.textContent = `🔥 ${G.streak} · ×${mult()}`;

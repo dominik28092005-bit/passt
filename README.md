@@ -14,6 +14,7 @@ Optimiert fürs Smartphone, funktioniert aber auch am Desktop.
 - Serien-Multiplikator, Auswertung pro Thema
 - Bei falscher Antwort: Erklärung, warum genau diese Antwort falsch ist, plus die richtige Lösung
 - „Falsche wiederholen“ nach jeder Runde
+- 20 selbst gezeichnete Schemata (Zustandsmodelle, Paging, RAID, i-node, Hypervisor, HoL-Blocking …) bei 36 Fragen
 - Fortschritt wird lokal im Browser gespeichert (`localStorage`)
 
 ## Fragen bearbeiten
