@@ -76,6 +76,21 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .explain{margin-top:16px;padding:14px 16px;border-radius:12px;border-left:4px solid var(--ok);background:var(--ok-soft);font-size:15px}
 .explain.bad{border-left-color:var(--bad);background:var(--bad-soft)}
 .explain b{display:block;margin-bottom:4px}
+.fb{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.fb .blk{padding:13px 15px;border-radius:12px;font-size:15px;border-left:4px solid}
+.fb .blk.no{background:var(--bad-soft);border-color:var(--bad)}
+.fb .blk.yes{background:var(--ok-soft);border-color:var(--ok)}
+.fb .blk .h{font-weight:600;margin-bottom:3px}
+.fb .blk .ans{font-style:italic}
+.fb details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14.5px;background:var(--card)}
+.fb summary{cursor:pointer;font-weight:600;color:var(--accent);list-style:none}
+.fb summary::-webkit-details-marker{display:none}
+.fb summary::before{content:"▸ ";}
+.fb details[open] summary::before{content:"▾ ";}
+.fb details ul{margin:8px 0 2px;padding-left:18px}
+.fb details li{margin-bottom:6px}
+.fb details li i{color:var(--muted)}
+.wrongitem .why{margin-top:4px}
 .foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;flex-wrap:wrap}
 .hint{font-size:12px;color:var(--muted)}
 .pop{position:fixed;left:50%;top:22%;transform:translateX(-50%);font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:26px;color:var(--ok);pointer-events:none;animation:pop .8s ease-out forwards}
@@ -227,13 +242,15 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
 </div>
 <script src="questions.js"></script>
+<script src="why.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const store = {
   get(k, d){ try{ const v = localStorage.getItem("osds_"+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem("osds_"+k, JSON.stringify(v)); }catch(e){} }
 };
-QUESTIONS.forEach((q,i)=> q.id = q.t + "_" + i);
+QUESTIONS.forEach((q,i)=>{ q.id = q.t + "_" + i; q.w = (typeof WHY!=="undefined" && WHY[i] && WHY[i][0]===q.t) ? [null].concat(WHY[i].slice(1)) : []; });
+const el = (tag, cls, txt)=>{ const n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n; };
 let stats = store.get("stats", {});   // id -> {r, w, last}
 let best = store.get("best", 0);
 let selTopics = new Set(store.get("topics", TOPICS.map(t=>t.id)));
@@ -359,11 +376,27 @@ function answer(oi){
     const v = +b.dataset.oi; b.disabled = true;
     if(v===q.a) b.classList.add("right"); else if(v===oi) b.classList.add("wrong"); else b.classList.add("dim");
   });
-  const ex = document.createElement("div");
-  ex.className = "explain" + (ok ? "" : " bad");
-  const head = document.createElement("b");
-  head.textContent = ok ? "Richtig!" : (oi===-1 ? "Zeit abgelaufen." : "Leider falsch.");
-  ex.appendChild(head); ex.appendChild(document.createTextNode(q.e));
+  const ex = el("div","fb");
+  if(ok){
+    const b = el("div","blk yes"); b.append(el("div","h","Richtig!"), el("div",null,q.e)); ex.appendChild(b);
+    if(q.w.length){
+      const d = el("details"); d.appendChild(el("summary",null,"Warum die anderen Antworten falsch sind"));
+      const ul = el("ul");
+      q.o.forEach((o,k)=>{ if(k===q.a || !q.w[k]) return; const li = el("li"); li.append(el("i",null,"„"+o+"“ – "), document.createTextNode(q.w[k])); ul.appendChild(li); });
+      d.appendChild(ul); ex.appendChild(d);
+    }
+  } else {
+    if(oi===-1){
+      const n = el("div","blk no"); n.append(el("div","h","Zeit abgelaufen.")); ex.appendChild(n);
+    } else {
+      const n = el("div","blk no");
+      n.append(el("div","h","Warum nicht deine Antwort?"), el("div","ans","„"+q.o[oi]+"“"), el("div",null,q.w[oi] || "Diese Antwort passt nicht zur Definition in den Folien."));
+      ex.appendChild(n);
+    }
+    const y = el("div","blk yes");
+    y.append(el("div","h","Richtig wäre:"), el("div","ans","„"+q.o[q.a]+"“"), el("div",null,q.e));
+    ex.appendChild(y);
+  }
   $("#explain").innerHTML = ""; $("#explain").appendChild(ex);
   $("#score").textContent = G.score+" P";
   const st = $("#streak"); st.classList.toggle("hidden", G.streak<3); st.textContent = `🔥 ${G.streak} · ×${mult()}`;
@@ -413,8 +446,11 @@ function finish(){
     const q1 = document.createElement("div"); q1.className="q"; q1.textContent = a.q.q;
     const y = document.createElement("div"); y.className="y"; y.textContent = "Deine Antwort: " + (a.chosen===-1 ? "– (Zeit abgelaufen)" : a.q.o[a.chosen]);
     const r = document.createElement("div"); r.className="a"; r.textContent = "Richtig: " + a.q.o[a.q.a];
+    const parts=[q1,y];
+    if(a.chosen!==-1 && a.q.w[a.chosen]) parts.push(el("div","why muted","Warum nicht: "+a.q.w[a.chosen]));
+    parts.push(r);
     const e = document.createElement("div"); e.className="muted"; e.style.marginTop="4px"; e.textContent = a.q.e;
-    d.append(q1,y,r,e); wb.appendChild(d);
+    parts.push(e); d.append(...parts); wb.appendChild(d);
   });
   G.wrongList = wrong.map(a=>a.q);
   show("result");
