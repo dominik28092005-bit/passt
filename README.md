@@ -1,4 +1,4 @@
-# OSDS Quiz
+# Semester 3 Quiz
 
 Lernspiel zur Vorlesung *Operating Systems and Distributed Systems*: 358 Multiple-Choice-Fragen in 12 Kapiteln, mit Schwerpunkt auf Verständnisfragen und Definitionen statt Folien-Details (Prozesse, Threads, Scheduling, Deadlocks, Memory Management, File Systems, I/O & RAID, Virtualisierung, HTTP/3 & QUIC …).
 

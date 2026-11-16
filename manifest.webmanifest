@@ -1,6 +1,6 @@
 {
-  "name": "OSDS Quiz – Betriebssysteme & Verteilte Systeme",
-  "short_name": "OSDS Quiz",
+  "name": "Semester 3 Quiz",
+  "short_name": "Semester 3 Quiz",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
