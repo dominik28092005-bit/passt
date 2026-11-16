@@ -137,5 +137,6 @@ const DIAGRAM_MAP = [
   ["Head-of-Line Blocking","hol"],["löst QUIC das HoL","hol"],["3-Way-Handshake","tcp"],
   ["Was ist ein Thread?","threads"],["leichtgewichtig","threads"],["Turnaround Time eines Prozesses","gantt"],
   ["Was ist ein Page Fault","paging"],["virtueller Adressraum","paging"],["absolutem und relativem Pfadnamen","inodelookup"],
-  ["Wozu dient Parität bei RAID","raid"],["Was bedeutet Striping","raid"],["Was ist RAID grundsätzlich","raid"],["Wozu dienen Control Groups","hyper"]
+  ["Wozu dient Parität bei RAID","raid"],["Was bedeutet Striping","raid"],["Was ist RAID grundsätzlich","raid"],["Wozu dienen Control Groups","hyper"],
+  ["Lücke (Gap)","procseg"],["Was liegt auf dem Stack","procseg"],["Zustand „Blocked“","state5"],["Interrupt Handler startet","icycle"],["Medium-Term Scheduler bei Speichermangel","schedlevels"],["Hold-and-Wait“","deadlock"],["Ausschluss von Circular Wait","deadlock"],["Page und Page Frame","paging"],["Was ist der TLB","paging"],["Buddy System, wenn ein Block","buddy"],["Was ist ein i-node?","inode"],["Indirect Blocks","inode"],["Link Count","inode"],["Write Penalty bei RAID","raid"],["Was ist ein Type-2-Hypervisor","hyper"],["Was ist ein Container?","hyper"],["bei HoL-Blocking nicht","hol"],["Was hat HTTP/2","hol"]
 ];
