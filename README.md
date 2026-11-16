@@ -1,6 +1,6 @@
 # OSDS Quiz
 
-Lernspiel zur Vorlesung *Operating Systems and Distributed Systems*: 179 Multiple-Choice-Fragen in 12 Kapiteln (Prozesse, Threads, Scheduling, Deadlocks, Memory Management, File Systems, I/O & RAID, Virtualisierung, HTTP/3 & QUIC …).
+Lernspiel zur Vorlesung *Operating Systems and Distributed Systems*: 179 Multiple-Choice-Fragen in 12 Kapiteln, mit Schwerpunkt auf Verständnisfragen und Definitionen statt Folien-Details (Prozesse, Threads, Scheduling, Deadlocks, Memory Management, File Systems, I/O & RAID, Virtualisierung, HTTP/3 & QUIC …).
 
 Optimiert fürs Smartphone, funktioniert aber auch am Desktop.
 

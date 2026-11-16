@@ -120,7 +120,7 @@ tcp: {cap:"TCP-3-Way-Handshake.", svg:_S(480,190,
 };
 
 const DIAGRAM_MAP = [
-  ["Kernel Mode vom User Mode","modes"],["Speicherhierarchie","memhier"],["Zugriffszeit hat Hauptspeicher","memhier"],
+  ["Kernel Mode vom User Mode","modes"],["Speicherhierarchie","memhier"],["Lokalitätsprinzip","memhier"],["Was ist ein Systemaufruf","modes"],
   ["Instruktionszyklus","icycle"],["niedrigsten Adressen","procseg"],
   ["3-Zustands-Modell","state3"],["5-Zustands-Modell","state5"],
   ["teilen sich alle Threads","threads"],["hat jeder Thread für sich","threads"],
@@ -134,5 +134,8 @@ const DIAGRAM_MAP = [
   ["keine Redundanz, sondern nur Striping","raid"],["Hauptnachteil von RAID 1","raid"],["RAID 5 von RAID 4","raid"],["kennzeichnet RAID 6","raid"],
   ["Schichtung der I/O-Software","iolayers"],
   ["Was ist ein Type-1-Hypervisor","hyper"],["Containern und hypervisorbasierten VMs","hyper"],
-  ["Head-of-Line Blocking","hol"],["löst QUIC das HoL","hol"],["3-Way-Handshake","tcp"]
+  ["Head-of-Line Blocking","hol"],["löst QUIC das HoL","hol"],["3-Way-Handshake","tcp"],
+  ["Was ist ein Thread?","threads"],["leichtgewichtig","threads"],["Turnaround Time eines Prozesses","gantt"],
+  ["Was ist ein Page Fault","paging"],["virtueller Adressraum","paging"],["absolutem und relativem Pfadnamen","inodelookup"],
+  ["Wozu dient Parität bei RAID","raid"],["Was bedeutet Striping","raid"],["Was ist RAID grundsätzlich","raid"],["Wozu dienen Control Groups","hyper"]
 ];
